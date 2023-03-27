@@ -1,26 +1,46 @@
 import { makeAutoObservable } from "mobx";
-import { IBudget } from "../types";
-export class Budget implements IBudget {
-    credits: number = 0;
-    nextBet = 0;
-    payout = 0;
+import { Change } from "../types";
+export class Budget {
+    budget: number = 5000;
+    coinVal: number = 0.2;
+    betLevel = 2;
+    win = 0;
     constructor() {
         makeAutoObservable(this, {}, { autoBind: true });
     }
-    changeBudget(amount: number) {
-        this.credits += amount;
-        //todo: write test if credits > 0
+    get coins() {
+        return this.budget / this.coinVal;
     }
-    bet(change: "increase" | "decrease") {
+    get nextBet() {
+        return this.betLevel * 15;
+    }
+    get nextBetVal() {
+        return this.betLevel * 15 * this.coinVal;
+    }
+    get winValue() {
+        const prize = this.budget - 5000;
+        return prize > 0 ? prize : 0;
+    }
+
+    won() {
+        this.win = this.nextBet * 100;
+        this.budget += this.win * this.coinVal;
+    }
+    lost() {
+        this.budget -= this.nextBetVal;
+    }
+    changeBetLevel(change: Change) {
         if (change === "increase") {
-            this.nextBet += 0.1;
-        }
-        if (change === "decrease") {
-            this.nextBet -= 0.1;
+            this.betLevel += 1;
+        } else if (change === "decrease") {
+            this.betLevel -= 1;
         }
     }
-    win(amount: number) {
-        this.payout += amount;
+    changeCoinValue(change: Change) {
+        if (change === "increase") {
+            this.coinVal += 0.1;
+        } else if (change === "decrease") {
+            this.coinVal -= 0.1;
+        }
     }
 }
-// export default new Budget();

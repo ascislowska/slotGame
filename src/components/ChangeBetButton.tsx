@@ -11,10 +11,13 @@ const ChangeBetButton: React.FC<ChangeBetButtonProps> = ({
     change,
 }) => {
     useContext(MainStoreContext);
-    const { bet } = mainStore.budget;
+    // const { bet } = mainStore.budget;
 
     return (
-        <button className="dashboard-buttons" onClick={() => bet("increase")}>
+        <button
+            className="dashboard-buttons"
+            // onClick={() => bet(change)}
+        >
             {children}
         </button>
     );

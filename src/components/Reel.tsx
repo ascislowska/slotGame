@@ -7,20 +7,25 @@ interface ReelProps {
 }
 const Reel = observer(({ position }: ReelProps) => {
     useContext(MainStoreContext);
-    console.log("Reel rerrenders");
     const reel = (): IReel => {
         switch (position) {
             case "left":
-                return mainStore.reels.reelLeft;
+                return mainStore.reelLeft;
             case "middle":
-                return mainStore.reels.reelMiddle;
+                return mainStore.reelMiddle;
             case "right":
-                return mainStore.reels.reelRight;
+                return mainStore.reelRight;
         }
     };
-    const { top, middle, bottom }: IReel = reel();
+    const { next, top, middle, bottom, spinning }: IReel = reel();
+
     return (
-        <div className="reel">
+        <div className={`reel ${spinning && "spinning"}`}>
+            {next.map((symbol, index) => (
+                <div className="symbol next" key={index}>
+                    {symbol}
+                </div>
+            ))}
             <div className="symbol">{top}</div>
             <div className="symbol">{middle}</div>
             <div className="symbol">{bottom}</div>

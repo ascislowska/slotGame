@@ -1,20 +1,32 @@
 import React, { useCallback, useContext } from "react";
 import { mainStore, MainStoreContext } from "../stores/mainStore";
 import { observer } from "mobx-react-lite";
+import { autorun } from "mobx";
 
 import Reel from "./Reel";
+import { Budget } from "../stores/budgetStore";
 const Reels = () => {
     useContext(MainStoreContext);
-    let { reelLeft, reelMiddle, reelRight, randReel } = mainStore.reels;
-    const spin = useCallback(() => {
-        console.log("spinning", reelLeft);
-        randReel(reelLeft);
-        randReel(reelMiddle);
-        randReel(reelRight);
-    }, [mainStore.reels]);
+    let { reelLeft, reelMiddle, reelRight, checkIfWins } = mainStore;
+
+    const spin = () => {
+        reelLeft.randomNextSymbol();
+        setTimeout(() => {
+            reelMiddle.randomNextSymbol();
+        }, 100);
+        setTimeout(() => {
+            reelRight.randomNextSymbol();
+        }, 200);
+
+        setTimeout(() => {
+            reelLeft.changeSymbols();
+            reelMiddle.changeSymbols();
+            reelRight.changeSymbols();
+            checkIfWins();
+        }, 2000);
+    };
     return (
         <div>
-            <h2>Middle left: {reelLeft.middle}</h2>
             <div className="reels">
                 <Reel position="left" />
                 <Reel position="middle" />

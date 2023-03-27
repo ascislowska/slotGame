@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react";
-import Dashboard from "../Dashboard";
+import Dashboard from "../dashboard/Dashboard";
 import { MainStoreContext, mainStore } from "../../stores/mainStore";
 describe("Dashboard", () => {
     it("should show and update budget", () => {

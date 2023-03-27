@@ -9,4 +9,10 @@ export interface IBudget {
     bet: (change: Change) => void;
     win: (amount: number) => void;
 }
-export type IReel = { top: string; middle: string; bottom: string };
+export type IReel = {
+    next: string[];
+    top: string;
+    middle: string;
+    bottom: string;
+    spinning: boolean;
+};
