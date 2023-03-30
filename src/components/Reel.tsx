@@ -1,12 +1,12 @@
 import React, { useCallback, useContext } from "react";
-import { mainStore, MainStoreContext } from "../stores/mainStore";
 import { observer } from "mobx-react-lite";
 import { IReel } from "../types";
+import { useMainStore } from "../hooks/useMainStore";
 interface ReelProps {
     position: "left" | "middle" | "right";
 }
 const Reel = observer(({ position }: ReelProps) => {
-    useContext(MainStoreContext);
+    const mainStore = useMainStore();
     const reel = (): IReel => {
         switch (position) {
             case "left":

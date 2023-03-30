@@ -14,7 +14,6 @@ class MainStore {
         makeAutoObservable(this, {}, { autoBind: true });
     }
     checkIfWins() {
-        console.log("checking...");
         if (
             this.reelLeft.middle === this.reelMiddle.middle &&
             this.reelMiddle.middle === this.reelRight.middle

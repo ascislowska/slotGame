@@ -1,6 +1,6 @@
 export type Currency = "€" | "$" | "PLN";
 
-export type Change = "increase" | "decrease";
+export type Change = "increase" | "decrease" | "max";
 export interface IBudget {
     credits: number;
     nextBet: number;
