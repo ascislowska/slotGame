@@ -33,7 +33,7 @@ export class Budget {
         this.win = this.nextBet * 100;
         this.budget += this.win * this.coinValue;
     }
-    lost() {
+    payForBet() {
         this.budget -= this.nextBetVal;
     }
     changeBetLevel(change: Change) {

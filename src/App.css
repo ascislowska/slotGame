@@ -1,13 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+}
 html {
-    font-size: 36px;
+    font-size: 24px;
 }
 .App {
+    height: 100vh;
     text-align: center;
-}
-
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+    overflow: hidden;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -27,61 +28,23 @@ html {
     color: white;
 }
 
-.reels {
-    display: flex;
-    flex-direction: row;
-    border: 2px solid palegreen;
-    justify-content: center;
-    padding: 1rem;
-    height: 5rem;
-}
-.reel {
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.1rem;
-    border: 2px solid paleturquoise;
-    padding: 0.5rem 1rem;
-    box-shadow: paleturquoise 0px 0px 1rem 0.2rem;
-    overflow: hidden;
-}
-
-.spinning .symbol {
-    animation: spin 2s ease-in-out 1;
-    animation-fill-mode: forwards;
-}
-.won-msg {
-    color: goldenrod;
-}
 .mainPanel {
+    position: absolute;
+    bottom: 5%;
     display: flex;
     justify-content: space-around;
-    padding: 2rem;
-    background-color: #282c34;
+    background-color: transparent;
 }
 .mainPanel > * {
     border: 4px solid #282c34;
     padding: 0.5rem;
-    background-color: white;
+    background-color: lightslategray;
 }
-.spin-btn-container {
-    flex-grow: 2;
-}
-.spin-btn {
-    border: 0.5rem solid #282c34;
-    color: #282c34;
-    font-size: 1.2rem;
-    background-color: white;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    transition-duration: 0.1s;
-}
-.spin-btn:hover {
-    transform: scale(1.05);
-    background-color: lightgrey;
-}
+
 .budget {
+    color: white;
+    position: absolute;
+    bottom: 0;
     display: flex;
     justify-content: center;
     gap: 1rem;
