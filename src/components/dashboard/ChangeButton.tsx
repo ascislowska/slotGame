@@ -1,4 +1,6 @@
 import React from "react";
+import { IoChevronForward, IoChevronBack } from "react-icons/io5";
+
 interface ChangeButtonProps {
     change: "increase" | "decrease";
     onClick: any;
@@ -10,8 +12,12 @@ const ChangeButton: React.FC<ChangeButtonProps> = ({
     disabled,
 }) => {
     return (
-        <button className="changeButton" onClick={onClick} disabled={disabled}>
-            {change === "increase" ? "+" : "-"}
+        <button
+            className={`changeButton`}
+            onClick={onClick}
+            disabled={disabled}
+        >
+            {change === "increase" ? <IoChevronForward /> : <IoChevronBack />}
         </button>
     );
 };

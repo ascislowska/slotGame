@@ -7,18 +7,21 @@ const NextBet = () => {
         budget: { nextBet, betLevel, changeBetLevel, isMaxBet },
     } = useMainStore();
     return (
-        <>
-            <div>Next bet: {nextBet}</div>
+        <div className="next-bet">
+            <div>
+                Next bet:
+                <div className="amount">{nextBet}</div>
+            </div>
 
             <div>
-                Bet level:
-                <div>
+                Bet level
+                <div className="changeable">
                     <ChangeButton
                         change="decrease"
                         onClick={() => changeBetLevel("decrease")}
                         disabled={betLevel <= 1}
                     />
-                    {betLevel}
+                    <div className="amount">{betLevel}</div>
                     <ChangeButton
                         change="increase"
                         onClick={() => changeBetLevel("increase")}
@@ -26,7 +29,7 @@ const NextBet = () => {
                     />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

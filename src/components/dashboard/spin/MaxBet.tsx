@@ -8,7 +8,7 @@ const MaxBet = () => {
         changeBetLevel("max");
         changeCoinValue("max");
     };
-    return <button onClick={maxValues}>MaxBet</button>;
+    return <button onClick={maxValues}>Max Bet</button>;
 };
 
 export default MaxBet;

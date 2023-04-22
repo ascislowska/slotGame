@@ -19,7 +19,7 @@ export class Symbol extends Container {
     rotate() {
         //to do
         gsap.to(this.children, {
-            rotation: 2 * Math.PI,
+            rotation: Math.PI,
             duration: 1,
             repeat: 1,
         });

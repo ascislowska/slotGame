@@ -7,9 +7,12 @@ import Spin from "./spin/Spin";
 
 const Dashboard: React.FC = () => {
     return (
-        <div>
-            <div className="mainPanel">
-                <div>info</div>
+        <div className="dashboard-container">
+            <div className="info-container">
+                <div className="info">i</div>{" "}
+            </div>
+
+            <div className="main-panel">
                 <NextBet />
                 <Spin />
                 <Coins />

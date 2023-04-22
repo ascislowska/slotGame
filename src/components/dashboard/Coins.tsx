@@ -7,16 +7,20 @@ const Coins: React.FC = () => {
         budget: { coins, coinValue, changeCoinValue, isMaxCoinValue },
     } = useMainStore();
     return (
-        <>
+        <div className="coins">
             <div>
-                Coin Value:
-                <div>
+                Coins
+                <div className="amount">{coins.toFixed(0)}</div>
+            </div>
+            <div>
+                Coin value
+                <div className="changeable ">
                     <ChangeButton
                         change="decrease"
                         onClick={() => changeCoinValue("decrease")}
                         disabled={coinValue <= 0.1}
                     />
-                    {coinValue.toFixed(1)}
+                    <div className="amount">{coinValue.toFixed(1)}</div>
                     <ChangeButton
                         change="increase"
                         onClick={() => changeCoinValue("increase")}
@@ -24,8 +28,7 @@ const Coins: React.FC = () => {
                     />
                 </div>
             </div>
-            <div>Coins: {coins.toFixed(0)}</div>
-        </>
+        </div>
     );
 };
 

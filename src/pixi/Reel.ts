@@ -55,6 +55,7 @@ export class Reel extends Container {
         });
     }
     public afterSpinning = async () => {
+        console.log("after spinning");
         this.symbols.forEach((symbol) => symbol.rotate());
     };
 }

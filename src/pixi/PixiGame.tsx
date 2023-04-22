@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { Application, Rectangle } from "pixi.js";
+import { Application, Rectangle, Sprite } from "pixi.js";
 import { useMainStore } from "../hooks/useMainStore";
 import { Reel } from "./Reel";
 import { getSymbolHeight, scrollBy } from "./consts";
@@ -28,13 +28,15 @@ const PixiGame: React.FC = () => {
     const onAssetsLoaded = (app: Application) => {
         screen = app.screen;
         symbolHeight = getSymbolHeight(screen);
-
+        app.stage.sortableChildren = true;
+        createBackground(app);
         const reelsBackground = new ReelBackground(app);
         app.stage.addChild(reelsBackground);
 
         reelsContainer = new ReelsContainer(app);
         app.stage.addChild(reelsContainer);
         reels = reelsContainer.children as Reel[];
+        reelsContainer.positionContainer();
 
         const mask = new Mask(app);
         app.stage.addChild(mask);
@@ -46,7 +48,15 @@ const PixiGame: React.FC = () => {
         winScreen = new WinScreen(app);
         app.stage.addChild(winScreen);
     };
-
+    function createBackground(app: Application) {
+        const background = Sprite.from("night");
+        background.anchor.set(0.5, 0);
+        app.stage.addChild(background);
+        background.scale.x =
+            Math.max(app.screen.width, app.screen.height) / background.height;
+        background.scale.y = background.scale.x;
+        background.x = app.screen.width / 2;
+    }
     async function play() {
         payForBet();
         if (isSpinning) return;

@@ -9,14 +9,14 @@ export class Mask extends Graphics {
     }
     createMask(app: Application) {
         this.beginFill("black");
-        this.drawRect(0, 0, 500, this.symbolHeight * 3);
+        this.drawRect(0, 0, app.screen.width * 5, this.symbolHeight * 3);
         this.endFill();
         app.stage.addChild(this);
         this.mask = this;
 
-        this.pivot.set(this.width / 2, this.height);
-        this.y = app.screen.height / 2 - this.symbolHeight / 2;
+        this.pivot.set(this.width / 2, 0);
+        this.y = this.symbolHeight * 1.25;
+        // this.y = app.screen.height / 2 - this.symbolHeight / 2;
         this.x = app.screen.width / 2;
-        this.height = this.symbolHeight * 3;
     }
 }

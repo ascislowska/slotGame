@@ -11,4 +11,4 @@ export const numberOfRows = 3;
 export const numberOfReels = 3;
 
 //export const symbolsKeys = ["0", "1", "2", "3", "4", "5", "6"];
-export const symbolsKeys = ["lemon", "club"];
+export const symbolsKeys = ["drink", "cafe", "burger", "star", "music"];

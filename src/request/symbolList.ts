@@ -1,4 +1,3 @@
-//export const symbolsList = ["0", "7", "0", "7", "0", "7", "0", "7", "0", "7"];
 import { scrollBy } from "../pixi/consts";
 import { symbolsKeys } from "../pixi/consts";
 export const symbolsList = () => {
