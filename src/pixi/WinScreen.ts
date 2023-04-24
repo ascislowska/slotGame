@@ -31,7 +31,7 @@ export class WinScreen extends Container {
         });
         tl.to(this.lightGlows, {
             // y: this.app.screen.height,
-            visibility: "hidden",
+            visibile: "hidden",
             duration: 1,
         });
     }
