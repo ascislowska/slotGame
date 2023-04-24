@@ -1,5 +1,15 @@
-import { Application, Assets, Container, Sprite } from "pixi.js";
+import { Application, Assets, Container, DisplayObject, Sprite } from "pixi.js";
 import { gsap } from "gsap";
+import { PixiPlugin } from "gsap/PixiPlugin";
+
+gsap.registerPlugin(PixiPlugin);
+PixiPlugin.registerPIXI({
+    DisplayObject: DisplayObject,
+    Application,
+    Container,
+    Sprite,
+});
+
 export class WinScreen extends Container {
     app: Application;
     lightGlows: Sprite[] = [];
@@ -19,7 +29,14 @@ export class WinScreen extends Container {
             stagger: 0.1,
             duration: 2,
         });
-        tl.to(this.lightGlows, { visible: "false", duration: 1 });
+        tl.to(this.lightGlows, {
+            // y: this.app.screen.height,
+            visibility: "hidden",
+            duration: 1,
+        });
+    }
+    blinking() {
+        const blink = gsap.timeline();
     }
     async drawGlows() {
         //todo: win animation
