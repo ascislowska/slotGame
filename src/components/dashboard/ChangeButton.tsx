@@ -12,11 +12,7 @@ const ChangeButton: React.FC<ChangeButtonProps> = ({
     disabled,
 }) => {
     return (
-        <button
-            className={`changeButton`}
-            onClick={onClick}
-            disabled={disabled}
-        >
+        <button className="btn" onClick={onClick} disabled={disabled}>
             {change === "increase" ? <IoChevronForward /> : <IoChevronBack />}
         </button>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { useMainStore } from "../../../hooks/useMainStore";
+import { useMainStore } from "../../hooks/useMainStore";
 const MaxBet = () => {
     const {
         budget: { changeBetLevel, changeCoinValue },
@@ -8,7 +8,13 @@ const MaxBet = () => {
         changeBetLevel("max");
         changeCoinValue("max");
     };
-    return <button onClick={maxValues}>Max Bet</button>;
+    return (
+        <div className="maxBet-container">
+            <a onClick={maxValues} className="btn">
+                Max Bet
+            </a>
+        </div>
+    );
 };
 
 export default MaxBet;

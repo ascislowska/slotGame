@@ -1,0 +1,64 @@
+@import "./modal.css";
+@import "./dashboard-layout.css";
+@import "./dashboard-btns.css";
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    font-size: 22px;
+    --dashboardtext: rgb(255, 255, 209);
+    --neon-yellow: color: rgb(255, 255, 130);
+    --neon-shadow: 0 0 10px goldenrod, 0 0 20px orangered, 0 0 40px mediumblue,
+        0 0 80px purple;
+    --neon-filter: saturate(60%);
+    color: var(--dashboardtext);
+}
+a {
+    color: inherit;
+}
+
+.App {
+    height: 100vh;
+    text-align: center;
+    overflow: hidden;
+    color: white;
+    font-family: "Tilt Neon";
+}
+
+/* NEON LIGHT */
+.main-panel {
+color: var(--neon-yellow);
+    text-shadow: var(--neon-shadow);
+    filter: var(--neon-filter);
+    will-change: filter, color;
+    
+}
+.main-panel > * {
+    animation: neon 1.7s ease-in-out infinite alternate;
+}
+.blue-neon {
+    color: lightskyblue;
+    text-shadow: 0 0 10px azure, 0 0 20px mediumblue, 0 0 40px orangered,
+        0 0 80px rgb(13, 128, 0);
+    will-change: filter, color;
+    filter: saturate(60%);
+    animation: neon 1.7s ease-in-out infinite alternate;
+}
+
+
+@keyframes neon {
+    30% {
+        color: white;
+        filter: saturate(200%) hue-rotate(20deg);
+    }
+    40% {
+        color: white;
+        filter: saturate(40%) hue-rotate(20deg);
+    }
+    50% {
+        color: white;
+        filter: saturate(200%) hue-rotate(20deg);
+    }
+}
+

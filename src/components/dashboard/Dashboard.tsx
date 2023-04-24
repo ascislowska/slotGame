@@ -1,20 +1,18 @@
-import React from "react";
+import { FC } from "react";
 import { observer } from "mobx-react-lite";
 import Budget from "./Budget";
 import NextBet from "./NextBet";
 import Coins from "./Coins";
-import Spin from "./spin/Spin";
+import InfoBtn from "./InfoBtn";
+import MaxBet from "./MaxBet";
 
-const Dashboard: React.FC = () => {
+const Dashboard: FC = () => {
     return (
         <div className="dashboard-container">
-            <div className="info-container">
-                <div className="info">i</div>{" "}
-            </div>
-
+            <InfoBtn />
             <div className="main-panel">
                 <NextBet />
-                <Spin />
+                <MaxBet />
                 <Coins />
             </div>
             <Budget />

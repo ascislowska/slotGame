@@ -6,7 +6,13 @@ export class Player {
     currency: Currency = this.currencies[0];
     coinValue = 0.1;
     language = "english";
+    cheatMode = true;
+
     constructor() {
         makeAutoObservable(this);
     }
+    toggleCheatMode = (isOn: boolean) => {
+        console.log("cheatmode update", this.cheatMode);
+        this.cheatMode = isOn;
+    };
 }

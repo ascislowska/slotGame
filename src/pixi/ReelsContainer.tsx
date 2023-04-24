@@ -8,7 +8,8 @@ export class ReelsContainer extends Container {
     symbolsKeys: string[][] = [];
     reels: Reel[] = [];
     symbolHeight: number;
-    constructor(app: Application) {
+    cheatMode = false;
+    constructor(app: Application, cheatMode: boolean) {
         super();
         this.app = app;
         this.symbolHeight = getSymbolHeight(app.screen);
@@ -17,6 +18,7 @@ export class ReelsContainer extends Container {
             this.addChild(reel);
             this.reels.push(reel);
         }
+        this.cheatMode = cheatMode;
         this.positionContainer();
     }
 
@@ -31,30 +33,36 @@ export class ReelsContainer extends Container {
 
     public async addSymbols(reel: Reel) {
         this.symbolsKeys = [];
-        const newSymbols = await symbolsList();
+        const newSymbols = await symbolsList(this.cheatMode);
         reel.addSymbols(newSymbols);
         this.symbolsKeys.push(newSymbols.slice(-3).reverse());
     }
 
-    public stopSpinning = () => {
-        console.log("stop spinning");
-        // this.reels.forEach(async (reel, i) => {
-        //     console.log(reel);
-        //     await reel.afterSpinning();
-        //     this.removeChild(reel);
-        //     const newReel = new Reel(i, this.app, this.symbolsKeys[i]);
-        //     this.addChild(newReel);
-        // });
+    public winAnimation = () => {
+        this.reels.forEach(async (reel, i) => {
+            reel.winAnimation();
+        });
+    };
+    public lostAnimation = () => {
+        this.reels.forEach(async (reel, i) => {
+            reel.lostAnimation();
+        });
+    };
+    public afterSpinning() {
+        console.log("after spinning");
         this.children.forEach((child) => {
-            console.log(child);
             this.removeChild(child);
         });
+        this.reels = [];
+
         for (let i = 0; i < numberOfReels; i++) {
             this.removeChild(this.children[i]);
             const reel = new Reel(i, this.app, this.symbolsKeys[i]);
             this.addChild(reel);
+            this.reels.push(reel);
         }
-    };
+        console.log(this.reels);
+    }
     public checkIfWins = () => {
         if (this.symbolsKeys.length >= 3 && this.middleLine()) {
             return true;

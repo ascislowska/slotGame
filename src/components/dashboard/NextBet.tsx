@@ -2,10 +2,15 @@ import { observer } from "mobx-react-lite";
 import { useMainStore } from "../../hooks/useMainStore";
 
 import ChangeButton from "./ChangeButton";
-const NextBet = () => {
+import { reaction } from "mobx";
+const NextBet = observer(() => {
     const {
         budget: { nextBet, betLevel, changeBetLevel, isMaxBet },
     } = useMainStore();
+    reaction(
+        () => nextBet,
+        (nextBet) => console.log("reaction"),
+    );
     return (
         <div className="next-bet">
             <div>
@@ -31,6 +36,6 @@ const NextBet = () => {
             </div>
         </div>
     );
-};
+});
 
-export default observer(NextBet);
+export default NextBet;

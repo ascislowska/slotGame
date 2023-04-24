@@ -11,29 +11,37 @@ import { ReelsContainer } from "./ReelsContainer";
 import { Mask } from "./Mask";
 import { WinScreen } from "./WinScreen";
 import { ReelBackground } from "./ReelBackground";
+import { Container } from "react-dom";
+import { Background } from "./Background";
 let app: Application | null = null;
 
-const PixiGame: React.FC = () => {
+const PixiGame: React.FC = observer(() => {
     const canvasRef: any = useRef<HTMLCanvasElement>(null);
     let screen: Rectangle;
     let reelsContainer: ReelsContainer;
     let reels: Reel[];
     let winScreen: WinScreen;
+    let playBtn: Button;
     let isSpinning = false;
     let symbolHeight: number;
+    // let app: Application;
     const {
-        budget: { won, payForBet },
+        budget: { won, payForBet, budget },
+        player: { cheatMode },
     } = useMainStore();
 
     const onAssetsLoaded = (app: Application) => {
         screen = app.screen;
         symbolHeight = getSymbolHeight(screen);
         app.stage.sortableChildren = true;
-        createBackground(app);
+        // createBackground(app);
+        const background = new Background(app);
+        app.stage.addChild(background);
+
         const reelsBackground = new ReelBackground(app);
         app.stage.addChild(reelsBackground);
 
-        reelsContainer = new ReelsContainer(app);
+        reelsContainer = new ReelsContainer(app, cheatMode);
         app.stage.addChild(reelsContainer);
         reels = reelsContainer.children as Reel[];
         reelsContainer.positionContainer();
@@ -42,47 +50,61 @@ const PixiGame: React.FC = () => {
         app.stage.addChild(mask);
         reelsContainer.mask = mask;
 
-        const playBtn = new Button(play, app);
+        playBtn = new Button(play, app);
         app.stage.addChild(playBtn);
 
         winScreen = new WinScreen(app);
         app.stage.addChild(winScreen);
     };
-    function createBackground(app: Application) {
-        const background = Sprite.from("night");
-        background.anchor.set(0.5, 0);
-        app.stage.addChild(background);
-        background.scale.x =
-            Math.max(app.screen.width, app.screen.height) / background.height;
-        background.scale.y = background.scale.x;
-        background.x = app.screen.width / 2;
-    }
-    async function play() {
-        payForBet();
-        if (isSpinning) return;
-        isSpinning = true;
+    // function createBackground(app: Application) {
+    //     const background = Sprite.from("night");
+    //     background.anchor.set(0.5, 0);
+    //     app.stage.addChild(background);
+    //     background.scale.x =
+    //         Math.max(app.screen.width, app.screen.height) / background.height;
+    //     background.scale.y = background.scale.x;
+    //     background.x = app.screen.width / 2;
+    // }
+    const spin = () => {
+        const timeline = gsap.timeline();
+        const newPosition = symbolHeight * scrollBy;
 
-        reels.forEach(async (reel) => {
-            reelsContainer.addSymbols(reel);
-        });
-
-        let newPosition = symbolHeight * scrollBy;
-        await gsap.to(reels, {
+        timeline.to(reels, {
             y: newPosition,
             duration: 2,
             stagger: 0.2,
             onComplete: stop,
         });
-        if (reelsContainer.checkIfWins()) {
-            won();
-            winScreen.showScreen();
-        }
-        newPosition = 0;
-        isSpinning = false;
+    };
+
+    function play() {
+        if (isSpinning) return;
+        playBtn.disable();
+        payForBet();
+        isSpinning = true;
+
+        reels.forEach((reel) => {
+            reelsContainer.addSymbols(reel);
+        });
+        spin();
     }
 
     const stop = () => {
-        reelsContainer.stopSpinning();
+        reelsContainer.afterSpinning();
+        isSpinning = false;
+        playBtn.enable();
+
+        if (reelsContainer.checkIfWins()) {
+            won();
+            reelsContainer.winAnimation();
+
+            winScreen.showScreen();
+        } else {
+            reelsContainer.lostAnimation();
+        }
+    };
+    const afterSpinning = () => {
+        reelsContainer.afterSpinning();
     };
     useEffect(() => {
         app = new Application({
@@ -113,5 +135,6 @@ const PixiGame: React.FC = () => {
     }, []);
 
     return <div ref={canvasRef} />;
-};
-export default observer(PixiGame);
+});
+// export default observer(PixiGame);
+export default PixiGame;

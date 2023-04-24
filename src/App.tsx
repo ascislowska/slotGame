@@ -1,4 +1,4 @@
-import "./App.css";
+import "./styles/App.css";
 import { mainStore, MainStoreContext } from "./stores/mainStore";
 
 import Dashboard from "./components/dashboard/Dashboard";

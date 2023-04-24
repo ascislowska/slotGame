@@ -1,0 +1,101 @@
+.dashboard-container {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.infoBtn-container {
+    position: absolute;
+    left: 2rem;
+    bottom: 1.5rem;
+    min-height: 2rem;
+    cursor: pointer;
+}
+
+/* //GRID */
+.info-container {
+    grid-area: info-btn;
+}
+.next-bet {
+    grid-area: next-bet;
+}
+.maxBet-container {
+    grid-area: max-bet;
+}
+.coins {
+    grid-area: coins;
+}
+.main-panel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 12rem 6rem 12rem;
+    grid-template-areas: " next-bet max-bet coins";
+    max-width: 1000px;
+}
+
+@media screen and (min-width: 1001px) {
+    .coins > *,
+    .next-bet > * {
+        width: 5rem;
+    }
+}
+@media screen and (max-width: 1000px) {
+    .main-panel {
+        grid-template-columns: 6rem 6rem 6rem;
+        /* grid-template-areas: "nextBet spin  coins"; */
+    }
+    .next-bet,
+    .coins {
+        flex-direction: column;
+    }
+    .main-panel > * {
+        font-size: 18px;
+        padding: 0.2rem;
+    }
+    .info-container {
+        left: 0.5rem;
+        bottom: 1rem;
+    }
+    .info {
+        height: 1.5rem;
+
+        font-size: 1rem;
+        border-width: 2px;
+    }
+}
+/* Main Panel */
+.main-panel > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+.maxBet-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.main-panel .changeable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.amount {
+    font-size: 1.5rem;
+}
+.changeButton {
+    display: flex;
+    align-items: center;
+    font-size: 1.75rem;
+}
+/* Budget */
+
+.budget {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+}

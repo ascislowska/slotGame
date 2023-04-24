@@ -1,7 +1,7 @@
 import { Budget } from "./budgetStore";
 import { Player } from "./playerStore";
 import { createContext } from "react";
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, reaction } from "mobx";
 
 class MainStore {
     budget = new Budget();
