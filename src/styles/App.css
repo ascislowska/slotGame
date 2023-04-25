@@ -1,4 +1,4 @@
-@import "./modal.css";
+/* @import "./modal.css";
 @import "./dashboard-layout.css";
 @import "./dashboard-btns.css";
 * {
@@ -26,9 +26,8 @@ a {
     font-family: "Tilt Neon";
 }
 
-/* NEON LIGHT */
 .main-panel {
-color: var(--neon-yellow);
+    color: var(--neon-yellow);
     text-shadow: var(--neon-shadow);
     filter: var(--neon-filter);
     will-change: filter, color;
@@ -61,4 +60,4 @@ color: var(--neon-yellow);
         filter: saturate(200%) hue-rotate(20deg);
     }
 }
-
+ */

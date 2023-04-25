@@ -3,7 +3,7 @@ import { Rectangle } from "pixi.js";
 export const symbolWidth = 100;
 export const symbolHeight = 100;
 export const symbolPadding = 10;
-export const getSymbolHeight = (screen: Rectangle) => screen.height / 8;
+export const getSymbolHeight = (screen: Rectangle) => screen.height / 9;
 
 export const spinSpeed = 10;
 export const scrollBy = 17;

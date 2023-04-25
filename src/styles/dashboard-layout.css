@@ -1,4 +1,4 @@
-.dashboard-container {
+/* .dashboard-container {
     position: absolute;
     width: 100%;
     bottom: 0;
@@ -15,7 +15,6 @@
     cursor: pointer;
 }
 
-/* GRID */
 .info-container {
     grid-area: info-btn;
 }
@@ -45,7 +44,6 @@
 @media screen and (max-width: 1000px) {
     .main-panel {
         grid-template-columns: 6rem 6rem 6rem;
-        /* grid-template-areas: "nextBet spin  coins"; */
     }
     .next-bet,
     .coins {
@@ -66,12 +64,7 @@
         border-width: 2px;
     }
 }
-@media screen and (max-height: 800px) {
-    .dashboard-container {
-        font-size: 0.8rem;
-    }
-}
-/* Main Panel */
+
 .main-panel > * {
     display: flex;
     align-items: center;
@@ -97,10 +90,21 @@
     align-items: center;
     font-size: 1.75rem;
 }
-/* Budget */
 
 .budget {
     display: flex;
     gap: 1rem;
     font-size: 0.8rem;
 }
+
+@media screen and (max-height: 800px) {
+    .dashboard-container {
+        font-size: 16px;
+    }
+    .dashboard-container .amount {
+        font-size: 22px;
+    }
+    .main-panel > * {
+        gap: 0.1rem;
+    }
+} */
