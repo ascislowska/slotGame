@@ -1,4 +1,4 @@
-/* .dashboard-container {
+.dashboard-container {
     position: absolute;
     width: 100%;
     bottom: 0;
@@ -9,8 +9,9 @@
 
 .infoBtn-container {
     position: absolute;
-    left: 2rem;
-    bottom: 1.5rem;
+    left: 2vw;
+    top: 2vh;
+    /* bottom: 1.5rem; */
     min-height: 2rem;
     cursor: pointer;
 }
@@ -30,39 +31,9 @@
 .main-panel {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 12rem 6rem 12rem;
+    grid-template-columns: 12em 6em 12em;
     grid-template-areas: " next-bet max-bet coins";
     max-width: 1000px;
-}
-
-@media screen and (min-width: 1001px) {
-    .coins > *,
-    .next-bet > * {
-        width: 5rem;
-    }
-}
-@media screen and (max-width: 1000px) {
-    .main-panel {
-        grid-template-columns: 6rem 6rem 6rem;
-    }
-    .next-bet,
-    .coins {
-        flex-direction: column;
-    }
-    .main-panel > * {
-        font-size: 18px;
-        padding: 0.2rem;
-    }
-    .info-container {
-        left: 0.5rem;
-        bottom: 1rem;
-    }
-    .info {
-        height: 1.5rem;
-
-        font-size: 1rem;
-        border-width: 2px;
-    }
 }
 
 .main-panel > * {
@@ -96,10 +67,23 @@
     gap: 1rem;
     font-size: 0.8rem;
 }
-
-@media screen and (max-height: 800px) {
-    .dashboard-container {
+@media screen and (min-width: 801px) {
+    .coins > *,
+    .next-bet > * {
+        width: 5rem;
+    }
+}
+@media screen and (max-width: 800px), (max-height: 800px) {
+    .main-panel {
+        grid-template-columns: 6em 6em 6em;
+    }
+    .next-bet,
+    .coins {
+        flex-direction: column;
+    }
+    .main-panel {
         font-size: 16px;
+        padding: 0.1rem;
     }
     .dashboard-container .amount {
         font-size: 22px;
@@ -107,4 +91,31 @@
     .main-panel > * {
         gap: 0.1rem;
     }
+    .info {
+        height: 1.5rem;
+
+        font-size: 1rem;
+        border-width: 2px;
+    }
+}
+/* @media screen and (max-width: 600px) and (orientation: portrait) {
+    .dashboard-container {
+        font-size: 16px;
+    }
+
 } */
+@media screen and (max-height: 800px) and (min-aspect-ratio: 2/1) and (orientation: landscape) {
+    .dashboard-container {
+        right: 0;
+        top: 0;
+        width: auto;
+        align-items: end;
+    }
+    .main-panel {
+        grid-auto-flow: row;
+        grid-template-columns: 12em;
+
+        grid-template-rows: 30vh 30vh 30vh;
+        grid-template-areas: "next-bet" "max-bet" "coins";
+    }
+}

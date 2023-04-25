@@ -12,7 +12,6 @@ import { Mask } from "./Mask";
 import { WinScreen } from "./WinScreen";
 import { ReelBackground } from "./ReelBackground";
 import { Background } from "./Background";
-let app: Application | null = null;
 
 const PixiGame: React.FC = observer(() => {
     const canvasRef: any = useRef<HTMLCanvasElement>(null);

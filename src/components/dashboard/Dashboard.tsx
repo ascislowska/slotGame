@@ -9,7 +9,6 @@ import MaxBet from "./MaxBet";
 const Dashboard: FC = () => {
     return (
         <div className="dashboard-container">
-            <InfoBtn />
             <div className="main-panel">
                 <NextBet />
                 <MaxBet />

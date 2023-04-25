@@ -1,4 +1,3 @@
-/* reset button styles
 button {
     border: none;
     margin: 0;
@@ -13,31 +12,25 @@ button {
     -moz-osx-font-smoothing: inherit;
 }
 
-.dashboard-container .btn {
+.btn {
     display: flex;
     align-items: center;
     justify-content: center;
     max-height: 3rem;
     --webkit-aspect-ratio: 1/1;
     aspect-ratio: 1 / 1;
-
     border: solid 0.2rem rgb(255, 255, 209);
     padding: 0.1rem;
     margin: 0.1rem;
     border-radius: 50%;
+    color: var(--dashboardtext);
     background-color: rgba(0, 0, 0, 0.6);
     box-shadow: var(--neon-shadow);
 }
-.dashboard-container btn {
-    display: flex;
-    align-items: center;
-    font-size: 1.75rem;
-    transition: transform cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
-}
 
-.dashboard-container .btn:hover {
+.btn:hover {
     cursor: pointer;
     animation-play-state: paused;
     transform: scale(1.05);
     filter: saturate(10%);
-} */
+}
