@@ -1,13 +1,14 @@
-import { Application, Container, Sprite } from "pixi.js";
+import { Application, Assets, Container, Sprite } from "pixi.js";
 
 export class Background extends Container {
     constructor(app: Application) {
         super();
         this.createBackground(app);
-        this.addGlows();
+        // this.addGlows();
     }
-    createBackground(app: Application) {
-        const background = Sprite.from("night");
+    async createBackground(app: Application) {
+        const texture = await Assets.load("night");
+        const background = Sprite.from(texture);
         background.anchor.set(0.5, 0);
         this.addChild(background);
         background.scale.x =
@@ -16,10 +17,10 @@ export class Background extends Container {
         background.x = app.screen.width / 2;
     }
 
-    private addGlows() {
-        const lightGlow = Sprite.from("pink-glow");
-        lightGlow.anchor.set(0.5);
-        lightGlow.position.set(0, 0);
-        this.addChild(lightGlow);
-    }
+    // private addGlows() {
+    //     const lightGlow = Sprite.from("pink-glow");
+    //     lightGlow.anchor.set(0.5);
+    //     lightGlow.position.set(0, 0);
+    //     this.addChild(lightGlow);
+    // }
 }

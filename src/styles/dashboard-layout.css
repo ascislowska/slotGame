@@ -15,7 +15,7 @@
     cursor: pointer;
 }
 
-/* //GRID */
+/* GRID */
 .info-container {
     grid-area: info-btn;
 }
@@ -64,6 +64,11 @@
 
         font-size: 1rem;
         border-width: 2px;
+    }
+}
+@media screen and (max-height: 800px) {
+    .dashboard-container {
+        font-size: 0.8rem;
     }
 }
 /* Main Panel */

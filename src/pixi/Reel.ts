@@ -2,6 +2,7 @@ import { Container, Application, Sprite, Graphics } from "pixi.js";
 import { Symbol } from "./Symbol";
 import { symbolsList } from "../request/symbolList";
 import { getSymbolHeight, numberOfRows, symbolPadding } from "./consts";
+import { gsap } from "gsap";
 
 export class Reel extends Container {
     prevPosition = 0;
@@ -11,6 +12,7 @@ export class Reel extends Container {
     symbols: Symbol[] = [];
     initialSymbols: string[] = [];
     newKeys: string[] = [];
+    symbolHeight: number;
     constructor(
         reelIndex: number,
         app: Application,
@@ -19,6 +21,7 @@ export class Reel extends Container {
         super();
         this.app = app;
         this.reelIndex = reelIndex;
+        this.symbolHeight = getSymbolHeight(this.app.screen);
 
         this.initialSymbols = initialSymbols
             ? initialSymbols
@@ -48,12 +51,14 @@ export class Reel extends Container {
 
     public addSymbols(newKeys: string[]) {
         this.requestNewKeys();
+
         newKeys.forEach((element, index) => {
             const symbol = new Symbol(-index - 1, element, this.app);
             this.addChild(symbol);
             this.symbols.push(symbol);
         });
     }
+
     public winAnimation = () => {
         this.symbols[1].win();
     };
@@ -61,7 +66,4 @@ export class Reel extends Container {
     public lostAnimation = () => {
         this.symbols[1].lost();
     };
-    private afterSpinning() {
-        this.destroy();
-    }
 }

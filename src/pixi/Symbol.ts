@@ -4,10 +4,12 @@ import {
     Container,
     Sprite,
     MIPMAP_MODES,
+    ColorMatrixFilter,
 } from "pixi.js";
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
 import { getSymbolHeight } from "./consts";
+
 gsap.registerPlugin(PixiPlugin);
 PixiPlugin.registerPIXI({
     DisplayObject: DisplayObject,
@@ -50,16 +52,34 @@ export class Symbol extends Container {
         blinking.play();
     }
     async win() {
-        await gsap.to(this.children, {
-            rotation: Math.PI * 4,
-            // pixi: { tint: "rgb(255, 255, 130)", scaleX: 0.7, scaleY: 0.7 },
-            duration: 0.5,
-        });
+        const filter = new ColorMatrixFilter();
+        this.filters = [filter];
+        const tl = gsap.timeline();
+
+        tl.fromTo(
+            filter,
+            { brightness: 1 },
+            {
+                brightness: 12,
+                duration: 4,
+            },
+            "<",
+        );
+        tl.fromTo(
+            filter,
+            {
+                brightness: 12,
+            },
+            {
+                brightness: 1,
+                duration: 3,
+            },
+        );
+        await tl.play();
     }
     lost() {
         const symbolScale = this.children[0].scale;
         const rotateBy = Math.PI * (Math.random() * 0.05);
-        console.log(rotateBy);
         const shaking = gsap.timeline();
         shaking.fromTo(
             this.children,

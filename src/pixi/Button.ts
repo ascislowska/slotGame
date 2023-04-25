@@ -51,7 +51,6 @@ export class Button extends Container {
     };
     disable = () => {
         this.disabled = true;
-        console.log("disabled");
         this.playAnimation.pause();
         if (this.btn) this.btn.tint = "#000000";
     };

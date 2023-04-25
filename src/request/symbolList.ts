@@ -3,13 +3,11 @@ import { symbolsKeys } from "../pixi/consts";
 export const symbolsList = (cheat?: boolean) => {
     const list: string[] = [];
     if (cheat) {
-        console.log("cheating");
         for (let i = 0; i < scrollBy; i++) {
             const index = Math.floor(Math.random() * symbolsKeys.length);
             list.push(symbolsKeys[index]);
         }
         list[list.length - 2] = "star";
-        console.log(list);
         return list;
     }
     for (let i = 0; i < scrollBy; i++) {

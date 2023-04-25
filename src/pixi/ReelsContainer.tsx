@@ -1,4 +1,5 @@
-import { Application, Container, Graphics } from "pixi.js";
+import { Application, Assets, Container, Graphics } from "pixi.js";
+import { sound } from "@pixi/sound";
 import { Reel } from "./Reel";
 import { randomInitialSymbols, symbolsList } from "../request/symbolList";
 import { getSymbolHeight, numberOfReels } from "./consts";
@@ -20,6 +21,10 @@ export class ReelsContainer extends Container {
         }
         this.cheatMode = cheatMode;
         this.positionContainer();
+
+        // let soundsMap = {
+        //     "my-sound": "../../public/assets/sounds/neon-flickering.wav",
+        // };
     }
 
     public positionContainer() {
@@ -49,7 +54,6 @@ export class ReelsContainer extends Container {
         });
     };
     public afterSpinning() {
-        console.log("after spinning");
         this.children.forEach((child) => {
             this.removeChild(child);
         });
@@ -61,7 +65,6 @@ export class ReelsContainer extends Container {
             this.addChild(reel);
             this.reels.push(reel);
         }
-        console.log(this.reels);
     }
     public checkIfWins = () => {
         if (this.symbolsKeys.length >= 3 && this.middleLine()) {

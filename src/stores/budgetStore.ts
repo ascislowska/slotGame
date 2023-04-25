@@ -7,6 +7,7 @@ export class Budget {
     betLevel = 2;
     maxBetLevel = 10;
     win = 0;
+    winRate = 100;
     constructor() {
         makeAutoObservable(this, {}, { autoBind: true });
     }
@@ -19,6 +20,7 @@ export class Budget {
     get nextBetVal() {
         return this.nextBet * this.coinValue;
     }
+
     get winValue() {
         const prize = this.budget - 5000;
         return prize > 0 ? prize : 0;
@@ -29,8 +31,11 @@ export class Budget {
     get isMaxCoinValue(): boolean {
         return this.coinValue >= this.maxCoinValue;
     }
+    toWin() {
+        return this.nextBet * this.winRate;
+    }
     won() {
-        this.win = this.nextBet * 100;
+        this.win = this.nextBet * this.winRate;
         this.budget += this.win * this.coinValue;
     }
     payForBet() {

@@ -1,22 +1,22 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { Application, Rectangle, Sprite } from "pixi.js";
+import { Application, Rectangle } from "pixi.js";
 import { useMainStore } from "../hooks/useMainStore";
 import { Reel } from "./Reel";
 import { getSymbolHeight, scrollBy } from "./consts";
-import { loadAssets } from "./loadAssets";
+import { loadAssets } from "./loaders/loadAssets";
 import { observer } from "mobx-react-lite";
 import { Button } from "./Button";
 import { ReelsContainer } from "./ReelsContainer";
 import { Mask } from "./Mask";
 import { WinScreen } from "./WinScreen";
 import { ReelBackground } from "./ReelBackground";
-import { Container } from "react-dom";
 import { Background } from "./Background";
 let app: Application | null = null;
 
 const PixiGame: React.FC = observer(() => {
     const canvasRef: any = useRef<HTMLCanvasElement>(null);
+    let app: Application;
     let screen: Rectangle;
     let reelsContainer: ReelsContainer;
     let reels: Reel[];
@@ -26,21 +26,21 @@ const PixiGame: React.FC = observer(() => {
     let symbolHeight: number;
     // let app: Application;
     const {
-        budget: { won, payForBet, budget },
+        budget: { won, payForBet, toWin },
         player: { cheatMode },
     } = useMainStore();
 
     const onAssetsLoaded = (app: Application) => {
+        app = app;
         screen = app.screen;
         symbolHeight = getSymbolHeight(screen);
         app.stage.sortableChildren = true;
-        // createBackground(app);
+
         const background = new Background(app);
         app.stage.addChild(background);
 
         const reelsBackground = new ReelBackground(app);
         app.stage.addChild(reelsBackground);
-
         reelsContainer = new ReelsContainer(app, cheatMode);
         app.stage.addChild(reelsContainer);
         reels = reelsContainer.children as Reel[];
@@ -52,9 +52,6 @@ const PixiGame: React.FC = observer(() => {
 
         playBtn = new Button(play, app);
         app.stage.addChild(playBtn);
-
-        winScreen = new WinScreen(app);
-        app.stage.addChild(winScreen);
     };
     // function createBackground(app: Application) {
     //     const background = Sprite.from("night");
@@ -81,6 +78,10 @@ const PixiGame: React.FC = observer(() => {
         if (isSpinning) return;
         playBtn.disable();
         payForBet();
+        // prepare win screen
+        winScreen = new WinScreen(app, toWin());
+        app.stage.addChild(winScreen);
+
         isSpinning = true;
 
         reels.forEach((reel) => {
@@ -90,9 +91,8 @@ const PixiGame: React.FC = observer(() => {
     }
 
     const stop = () => {
-        reelsContainer.afterSpinning();
+        afterSpinning();
         isSpinning = false;
-        playBtn.enable();
 
         if (reelsContainer.checkIfWins()) {
             won();
@@ -102,6 +102,7 @@ const PixiGame: React.FC = observer(() => {
         } else {
             reelsContainer.lostAnimation();
         }
+        playBtn.enable();
     };
     const afterSpinning = () => {
         reelsContainer.afterSpinning();

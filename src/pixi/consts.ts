@@ -11,4 +11,4 @@ export const numberOfRows = 3;
 export const numberOfReels = 3;
 
 export const symbolsKeys = ["drink", "cafe", "burger", "star", "music"];
-export const glows = ["pink-glow", "light-glow", "blue-glow", "lightpink-glow"];
+export const glows = ["blueGlow", "lightGlow", "lightpinkGlow", "pinkGlow"];

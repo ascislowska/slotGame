@@ -12,7 +12,6 @@ export class Player {
         makeAutoObservable(this);
     }
     toggleCheatMode = (isOn: boolean) => {
-        console.log("cheatmode update", this.cheatMode);
         this.cheatMode = isOn;
     };
 }
