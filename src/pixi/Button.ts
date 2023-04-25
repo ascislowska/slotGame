@@ -46,7 +46,7 @@ export class Button extends Container {
     }
     private btnPosition() {
         this.x = this.app.screen.width / 2;
-        this.y = this.app.screen.height * 0.75;
+        this.y = this.app.screen.height * 0.7;
     }
     onMouseOver = () => {
         this.playAnimation.pause();

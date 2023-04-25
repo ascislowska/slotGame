@@ -52,15 +52,7 @@ const PixiGame: React.FC = observer(() => {
         playBtn = new Button(play, app);
         app.stage.addChild(playBtn);
     };
-    // function createBackground(app: Application) {
-    //     const background = Sprite.from("night");
-    //     background.anchor.set(0.5, 0);
-    //     app.stage.addChild(background);
-    //     background.scale.x =
-    //         Math.max(app.screen.width, app.screen.height) / background.height;
-    //     background.scale.y = background.scale.x;
-    //     background.x = app.screen.width / 2;
-    // }
+
     const spin = () => {
         const timeline = gsap.timeline();
         const newPosition = symbolHeight * scrollBy;

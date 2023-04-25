@@ -8,7 +8,7 @@
 html {
     font-size: 22px;
     --dashboardtext: rgb(255, 255, 209);
-    --neon-yellow: color: rgb(255, 255, 130);
+    --neon-yellow: rgb(255, 255, 130);
     --neon-shadow: 0 0 10px goldenrod, 0 0 20px orangered, 0 0 40px mediumblue,
         0 0 80px purple;
     --neon-filter: saturate(60%);
@@ -27,11 +27,9 @@ a {
 }
 
 .main-panel {
-    color: var(--neon-yellow);
     text-shadow: var(--neon-shadow);
     filter: var(--neon-filter);
     will-change: filter, color;
-    
 }
 .main-panel > * {
     animation: neon 1.7s ease-in-out infinite alternate;
@@ -44,7 +42,6 @@ a {
     filter: saturate(60%);
     animation: neon 1.7s ease-in-out infinite alternate;
 }
-
 
 @keyframes neon {
     30% {
@@ -60,4 +57,3 @@ a {
         filter: saturate(200%) hue-rotate(20deg);
     }
 }
-

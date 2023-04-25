@@ -1,5 +1,4 @@
 import { Application, Assets, Container, Graphics } from "pixi.js";
-import { sound } from "@pixi/sound";
 import { Reel } from "./Reel";
 import { randomInitialSymbols, symbolsList } from "../request/symbolList";
 import { getSymbolHeight, numberOfReels } from "./consts";
@@ -21,10 +20,6 @@ export class ReelsContainer extends Container {
         }
         this.cheatMode = cheatMode;
         this.positionContainer();
-
-        // let soundsMap = {
-        //     "my-sound": "../../public/assets/sounds/neon-flickering.wav",
-        // };
     }
 
     public positionContainer() {

@@ -1,16 +1,16 @@
 import { Assets, SpriteSource } from "pixi.js";
-import { symbolsKeys, glows } from "../consts";
 import { sound } from "@pixi/sound";
 // import * as sound from "pixi-sound";
 // import flickering from "../assets/sounds/neon-flickering.wav";
-// import neonSound from "../assets/sounds/neon-sound.mp3";
+import "../../assets/sounds/neon-sound.mp3";
+// import "./buzz2.mp3";
 export const loadSounds = async () => {
-    // Assets.add("flickering", "../../assets/sounds/neon-flickering.wav");
-    // await Assets.load("flickering");
-    // // sound.add("neon", "../../assets/sounds/neon-sound.mp3");
-    // // sound.play("neon");
-    // Assets.add("neonSound", "../../assets/sounds/neon-sound.mp3");
-    // await Assets.load("neonSound");
+    Assets.add("neonSound", "../../assets/sounds/neon-sound.mp3");
+    await Assets.load("neonSound");
+
+    // sound.add("neon", "../../assets/sounds/neon-sound.mp3");
+    // sound.play("neon");
+
     // let soundsMap = {
     //     "my-sound": "../../assets/sounds/ringing_of_steel.wav",
     // };
@@ -24,4 +24,6 @@ export const loadSounds = async () => {
     // );
     // await Assets.load("my-sound");
     // sound.play("my-sound");
+    // Assets.add("flickering", "../../assets/sounds/neon-flickering.wav");
+    // await Assets.load("flickering");
 };
