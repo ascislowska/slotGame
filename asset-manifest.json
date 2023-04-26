@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/slotGame/static/css/main.f0b1ab69.css",
-    "main.js": "/slotGame/static/js/main.8e48d047.js",
+    "main.css": "/slotGame/static/css/main.da6a3268.css",
+    "main.js": "/slotGame/static/js/main.f11b8694.js",
     "static/js/787.28cb0dcd.chunk.js": "/slotGame/static/js/787.28cb0dcd.chunk.js",
     "static/media/night.jpg": "/slotGame/static/media/night.f1b25eaa15659e9dc6d9.jpg",
     "static/media/border-neon.png": "/slotGame/static/media/border-neon.5b66b569e1a3c373bbcb.png",
@@ -14,12 +14,12 @@
     "static/media/drink.png": "/slotGame/static/media/drink.5cc5bc8966fe509ad70f.png",
     "static/media/pink-glow.png": "/slotGame/static/media/pink-glow.b7a98b1a411da16f8c68.png",
     "index.html": "/slotGame/index.html",
-    "main.f0b1ab69.css.map": "/slotGame/static/css/main.f0b1ab69.css.map",
-    "main.8e48d047.js.map": "/slotGame/static/js/main.8e48d047.js.map",
+    "main.da6a3268.css.map": "/slotGame/static/css/main.da6a3268.css.map",
+    "main.f11b8694.js.map": "/slotGame/static/js/main.f11b8694.js.map",
     "787.28cb0dcd.chunk.js.map": "/slotGame/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f0b1ab69.css",
-    "static/js/main.8e48d047.js"
+    "static/css/main.da6a3268.css",
+    "static/js/main.f11b8694.js"
   ]
 }
