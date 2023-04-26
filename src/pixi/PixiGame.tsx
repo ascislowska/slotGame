@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { Application, Rectangle } from "pixi.js";
+import { Application } from "pixi.js";
 import { useMainStore } from "../hooks/useMainStore";
 import { Reel } from "./Reel";
-import { getSymbolHeight, scrollBy } from "./consts";
 import { loadAssets } from "./loaders/loadAssets";
 import { observer } from "mobx-react-lite";
 import { Button } from "./Button";
@@ -12,92 +10,62 @@ import { Mask } from "./Mask";
 import { WinScreen } from "./WinScreen";
 import { ReelBackground } from "./ReelBackground";
 import { Background } from "./Background";
+import { sound } from "@pixi/sound";
+import { spin } from "./spin";
 
 const PixiGame: React.FC = observer(() => {
     const canvasRef: any = useRef<HTMLCanvasElement>(null);
     let app: Application;
-    let screen: Rectangle;
     let reelsContainer: ReelsContainer;
     let reels: Reel[];
     let winScreen: WinScreen;
     let playBtn: Button;
-    let isSpinning = false;
-    let symbolHeight: number;
-    // let app: Application;
+    // let symbolHeight: number;
     const {
         budget: { won, payForBet, toWin },
         player: { cheatMode },
     } = useMainStore();
 
-    const onAssetsLoaded = (app: Application) => {
-        app = app;
-        screen = app.screen;
-        symbolHeight = getSymbolHeight(screen);
+    const onAssetsLoaded = (newApp: Application) => {
+        app = newApp;
+        // symbolHeight = getSymbolHeight(screen);
         app.stage.sortableChildren = true;
 
         const background = new Background(app);
         app.stage.addChild(background);
 
+        playBtn = new Button(play, app);
+        app.stage.addChild(playBtn);
+
         const reelsBackground = new ReelBackground(app);
         app.stage.addChild(reelsBackground);
+
         reelsContainer = new ReelsContainer(app, cheatMode);
         app.stage.addChild(reelsContainer);
-        reels = reelsContainer.children as Reel[];
         reelsContainer.positionContainer();
+        reels = reelsContainer.children as Reel[];
 
         const mask = new Mask(app);
         app.stage.addChild(mask);
         reelsContainer.mask = mask;
-
-        playBtn = new Button(play, app);
-        app.stage.addChild(playBtn);
-    };
-
-    const spin = () => {
-        const timeline = gsap.timeline();
-        const newPosition = symbolHeight * scrollBy;
-
-        timeline.to(reels, {
-            y: newPosition,
-            duration: 2,
-            stagger: 0.2,
-            onComplete: stop,
-        });
     };
 
     function play() {
-        if (isSpinning) return;
+        sound.play("neon");
         playBtn.disable();
         payForBet();
+
         // prepare win screen
-        winScreen = new WinScreen(app, toWin());
+        winScreen = new WinScreen(app, toWin(), playBtn);
         app.stage.addChild(winScreen);
 
-        isSpinning = true;
-
+        //prepare new symbols to show
         reels.forEach((reel) => {
             reelsContainer.addSymbols(reel);
         });
-        spin();
+        spin(app.screen, reels, reelsContainer, winScreen, won);
     }
 
-    const stop = () => {
-        afterSpinning();
-        isSpinning = false;
-
-        if (reelsContainer.checkIfWins()) {
-            won();
-            reelsContainer.winAnimation();
-
-            winScreen.showScreen();
-        } else {
-            reelsContainer.lostAnimation();
-        }
-        playBtn.enable();
-    };
-    const afterSpinning = () => {
-        reelsContainer.afterSpinning();
-    };
     useEffect(() => {
         app = new Application({
             backgroundColor: "#000000",
@@ -120,8 +88,6 @@ const PixiGame: React.FC = observer(() => {
         return () => {
             if (app) {
                 app.stop();
-                // app.destroy();
-                // app = null;
             }
         };
     }, []);

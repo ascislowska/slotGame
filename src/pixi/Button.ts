@@ -15,7 +15,7 @@ export class Button extends Container {
     btn: Sprite | null = null;
     disabled: boolean = false;
     playAnimation = gsap.timeline();
-    filter: ColorMatrixFilter;
+    filter = new ColorMatrixFilter();
 
     constructor(onClick: () => void, app: Application) {
         super();
@@ -26,6 +26,7 @@ export class Button extends Container {
         this.sortableChildren = true;
         this.filter = new ColorMatrixFilter();
         this.filters = [this.filter];
+        this.lightUp();
     }
 
     private async addSprite() {
@@ -36,7 +37,6 @@ export class Button extends Container {
         this.btn.texture.baseTexture.mipmap = MIPMAP_MODES.ON;
 
         this.btn.width = this.btn.height = getSymbolHeight(this.app.screen) * 2;
-        // this.pivot.set(this.width / 2, this.height / 2);
         this.btn.anchor.set(0.5);
         this.btn.on("pointerdown", this.onClick);
         this.btn.on("mouseover", this.onMouseOver);
@@ -44,14 +44,16 @@ export class Button extends Container {
 
         this.blink(this.btn);
     }
+
     private btnPosition() {
         this.x = this.app.screen.width / 2;
         this.y = this.app.screen.height * 0.7;
     }
     onMouseOver = () => {
-        this.playAnimation.pause();
-        // gsap.to(this.btn, { pixi: { tint: "rgb(255,255,255" } });
-        gsap.to(this.filter, { brightness: 3 });
+        if (!this.disabled) {
+            this.playAnimation.pause();
+            gsap.to(this.filter, { brightness: 6 });
+        }
     };
     onMouseOut = () => {
         if (!this.disabled) {
@@ -61,38 +63,31 @@ export class Button extends Container {
     };
     disable = () => {
         this.disabled = true;
+        if (this.btn) this.btn.eventMode = "none";
         this.playAnimation.pause();
         gsap.to(this.filter, { brightness: 0.2 });
     };
     enable = () => {
         this.disabled = false;
+
         if (this.btn) {
             gsap.to(this.filter, { brightness: 1 });
-
-            // this.btn.tint = "#FFFFFF";
+            this.btn.eventMode = "static";
         }
     };
-    blink(target: Sprite) {
-        this.playAnimation.fromTo(
-            this.btn,
-            {
-                pixi: { tint: "rgb(0,0, 0)" },
-            },
-            {
-                pixi: { tint: "rgb(255,255, 255)" },
-                duration: 4,
-                ease: "bounce.out",
-            },
-        );
+    lightUp = () => {
         this.playAnimation.fromTo(
             this.filter,
-            { brightness: 3 },
+            { brightness: 0.1 },
             {
-                brightness: 1,
+                brightness: 3,
                 duration: 4,
                 ease: "bounce.out",
             },
+            "<",
         );
+    };
+    blink(target: Sprite) {
         const blinking = gsap.timeline({ repeat: -1, repeatDelay: 1 });
         blinking.to(target, {
             pixi: { tint: "rgb(180, 0, 180)" },

@@ -1,4 +1,4 @@
-import { Application, Assets, Container, Graphics } from "pixi.js";
+import { Application, Container } from "pixi.js";
 import { Reel } from "./Reel";
 import { randomInitialSymbols, symbolsList } from "../request/symbolList";
 import { getSymbolHeight, numberOfReels } from "./consts";
@@ -38,13 +38,13 @@ export class ReelsContainer extends Container {
         this.symbolsKeys.push(newSymbols.slice(-3).reverse());
     }
 
-    public winAnimation = () => {
-        this.reels.forEach(async (reel, i) => {
+    public winAnimation = async () => {
+        this.reels.forEach(async (reel) => {
             reel.winAnimation();
         });
     };
     public lostAnimation = () => {
-        this.reels.forEach(async (reel, i) => {
+        this.reels.forEach(async (reel) => {
             reel.lostAnimation();
         });
     };

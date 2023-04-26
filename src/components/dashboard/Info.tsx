@@ -9,7 +9,6 @@ const Info = ({ onClose }: InfoProps) => {
     const {
         player: { cheatMode, toggleCheatMode },
     } = useMainStore();
-    const [checked, setChecked] = useState(cheatMode);
     const setCheatMode = () => {
         toggleCheatMode(!cheatMode);
     };
@@ -29,18 +28,25 @@ const Info = ({ onClose }: InfoProps) => {
                         </a>{" "}
                         on Freepik
                     </li>
+                    <li>
+                        <a href="https://opengameart.org/content/summertown">
+                            Summer City by LushoGames
+                        </a>{" "}
+                        on OpenGamesArt
+                    </li>
+                    <li>
+                        <a href="https://freesound.org/people/sepal/sounds/121994/">
+                            Neon tube by Sepal
+                        </a>{" "}
+                        on freesound.org
+                    </li>
+                    <li>
+                        <a href="https://www.zapsplat.com/music/fruit-machine-sound-win-or-spin-tone-2/">
+                            Fruit machine sound, win or spin tone 2{" "}
+                        </a>{" "}
+                        by ZapSplat
+                    </li>
                 </ul>
-            </div>
-            <div className="checkbox-container">
-                <label>
-                    <input
-                        type="checkbox"
-                        className="checkbox"
-                        checked={cheatMode}
-                        onChange={() => setCheatMode()}
-                    />
-                    cheat mode
-                </label>
             </div>
         </div>
     );

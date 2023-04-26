@@ -12,10 +12,11 @@ import { getSymbolHeight } from "./consts";
 
 gsap.registerPlugin(PixiPlugin);
 PixiPlugin.registerPIXI({
-    DisplayObject: DisplayObject,
+    DisplayObject,
     Application,
     Container,
     Sprite,
+    ColorMatrixFilter,
 });
 
 export class Symbol extends Container {
@@ -52,6 +53,8 @@ export class Symbol extends Container {
         blinking.play();
     }
     async win() {
+        console.log("won", this);
+
         const filter = new ColorMatrixFilter();
         this.filters = [filter];
         const tl = gsap.timeline();
@@ -75,7 +78,7 @@ export class Symbol extends Container {
                 duration: 3,
             },
         );
-        await tl.play();
+        tl.play();
     }
     lost() {
         const symbolScale = this.children[0].scale;

@@ -6,20 +6,12 @@ export class WinText extends Container {
         fontFamily: "arial",
         fontSize: 36,
         fontWeight: "bold",
-        fill: ["#020F9C", "#1F98FA"], // gradient
+        fill: ["#020F9C", "#1F98FA"],
         stroke: "rgb(255, 255, 130)",
         strokeThickness: 1,
-        // dropShadow: true,
-        // dropShadowColor: "rgb(255, 255, 209)",
-        // dropShadowBlur: 20,
-        // dropShadowDistance: 0,
-
         lineJoin: "round",
     });
     constructor(screen: Rectangle, winValue: number) {
-        // Assets.add(neonFont, "../assets/fonts/TiltNeon-Regular.ttf");
-        // Assets.load("neonFont").then(() => this.createText());
-
         super();
         const textContent = `Big win!!! ${winValue}`;
         this.createText(textContent);

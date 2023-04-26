@@ -1,8 +1,7 @@
-import { Container, Application, Sprite, Graphics } from "pixi.js";
+import { Container, Application } from "pixi.js";
 import { Symbol } from "./Symbol";
 import { symbolsList } from "../request/symbolList";
 import { getSymbolHeight, numberOfRows, symbolPadding } from "./consts";
-import { gsap } from "gsap";
 
 export class Reel extends Container {
     prevPosition = 0;
