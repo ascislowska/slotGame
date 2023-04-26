@@ -1,9 +1,11 @@
 import { Application, Graphics } from "pixi.js";
 import { getSymbolHeight } from "./consts";
 export class Mask extends Graphics {
+    app: Application;
     symbolHeight: number;
     constructor(app: Application) {
         super();
+        this.app = app;
         this.symbolHeight = getSymbolHeight(app.screen);
         this.createMask(app);
     }
@@ -16,7 +18,12 @@ export class Mask extends Graphics {
 
         this.pivot.set(this.width / 2, 0);
         this.y = this.symbolHeight * 1.25;
-        // this.y = app.screen.height / 2 - this.symbolHeight / 2;
         this.x = app.screen.width / 2;
+    }
+    onResize() {
+        const symbolHeight = getSymbolHeight(this.app.screen);
+        this.y = symbolHeight * 1.25;
+        this.height = symbolHeight * 3;
+        this.x = this.app.screen.width / 2;
     }
 }

@@ -1,4 +1,4 @@
-import { Application, Container, Graphics, Rectangle, Sprite } from "pixi.js";
+import { Application, Container, Graphics, Sprite } from "pixi.js";
 import {
     getSymbolHeight,
     numberOfReels,
@@ -6,38 +6,64 @@ import {
     symbolPadding,
 } from "./consts";
 export class ReelBackground extends Container {
-    symbolHeight: number;
+    app: Application;
+    border: Sprite;
     overlay = new Graphics();
     constructor(app: Application) {
         super();
-        this.symbolHeight = getSymbolHeight(app.screen);
-        this.addOverlay(app);
-        this.createBorder();
-        this.positionContainer(app);
-        this.overlay.y = 1.75 * this.symbolHeight;
-        this.overlay.x = 2.125 * this.symbolHeight;
+        this.app = app;
+
+        const symbolHeight = getSymbolHeight(this.app.screen);
+        this.addOverlay(symbolHeight);
+        this.border = Sprite.from("border-neon");
+        this.addChild(this.border);
+
+        this.borderSize(symbolHeight);
+        this.positionContainer(symbolHeight);
+        this.postionOverlay(symbolHeight);
     }
-    private addOverlay(app: Application) {
+
+    positionContainer(symbolHeight: number) {
+        this.pivot.set(this.width / 2 + symbolHeight / 2, 0);
+        this.y = -symbolHeight / 2;
+        this.x = this.app.screen.width / 2 + symbolHeight / 2;
+    }
+
+    borderSize = (symbolHeight: number) => {
+        this.border.width = symbolHeight * (numberOfReels * 2.5);
+        this.border.height = symbolHeight * (numberOfRows * 2.25);
+    };
+
+    private addOverlay(symbolHeight: number) {
         this.addChild(this.overlay);
         this.overlay.beginFill("rgba(0,0,0,0.5)");
         this.overlay.drawRect(
             0,
             0,
-            (this.symbolHeight + symbolPadding) * numberOfReels + symbolPadding,
-            (this.symbolHeight + symbolPadding) * numberOfRows + symbolPadding,
+            this.getOverlayWidth(symbolHeight),
+            this.getOverlayHeight(symbolHeight),
         );
         this.overlay.endFill();
         this.overlay.pivot.set(0, 0);
     }
-    positionContainer(app: Application) {
-        this.pivot.set(this.width / 2 + this.symbolHeight / 2, 0);
-        this.y = -this.symbolHeight / 2;
-        this.x = app.screen.width / 2 + this.symbolHeight / 2;
+    private getOverlayWidth(symbolHeight: number) {
+        return (symbolHeight + symbolPadding) * numberOfReels + symbolPadding;
     }
-    createBorder() {
-        const border = Sprite.from("border-neon");
-        border.width = this.symbolHeight * (numberOfReels * 2.5);
-        border.height = this.symbolHeight * (numberOfRows * 2.25);
-        this.addChild(border);
+    private getOverlayHeight(symbolHeight: number) {
+        return (symbolHeight + symbolPadding) * numberOfRows + symbolPadding;
+    }
+    private postionOverlay(symbolHeight: number) {
+        this.overlay.y = 1.75 * symbolHeight;
+        this.overlay.x = 2.125 * symbolHeight;
+    }
+    public onResize(app: Application) {
+        const symbolHeight = getSymbolHeight(app.screen);
+
+        this.borderSize(symbolHeight);
+
+        this.positionContainer(symbolHeight);
+        this.overlay.width = this.getOverlayWidth(symbolHeight);
+        this.overlay.height = this.getOverlayHeight(symbolHeight);
+        this.postionOverlay(symbolHeight);
     }
 }

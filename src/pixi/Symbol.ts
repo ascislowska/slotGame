@@ -9,6 +9,7 @@ import {
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
 import { getSymbolHeight } from "./consts";
+import { AgentOptions } from "http";
 
 gsap.registerPlugin(PixiPlugin);
 PixiPlugin.registerPIXI({
@@ -21,18 +22,32 @@ PixiPlugin.registerPIXI({
 
 export class Symbol extends Container {
     symbolHeight: number;
+    symbolIndex: number;
+    symbol: Sprite;
+    app: Application;
 
     constructor(index: number, symbolKey: string, app: Application) {
         super();
-        this.symbolHeight = getSymbolHeight(app.screen);
-        const symbol = Sprite.from(symbolKey);
 
-        symbol.width = symbol.height = this.symbolHeight;
-        symbol.texture.baseTexture.mipmap = MIPMAP_MODES.ON;
-        this.addChild(symbol);
-        symbol.anchor.set(0.5, 0.5);
-        symbol.y = index * this.symbolHeight;
+        this.app = app;
+        this.symbolHeight = getSymbolHeight(app.screen);
+        this.symbolIndex = index;
+
+        this.symbol = Sprite.from(symbolKey);
+        this.symbol.texture.baseTexture.mipmap = MIPMAP_MODES.ON;
+        this.addChild(this.symbol);
+
+        // this.symbol.width = this.symbol.height = this.symbolHeight;
+        // this.symbol.anchor.set(0.5, 0.5);
+        // this.symbol.y = index * this.symbolHeight;
+        this.postionSymbol();
         this.blink();
+    }
+    postionSymbol() {
+        const symbolHeight = getSymbolHeight(this.app.screen);
+        this.symbol.width = this.symbol.height = symbolHeight;
+        this.symbol.anchor.set(0.5, 0.5);
+        this.symbol.y = this.symbolIndex * symbolHeight;
     }
     blink() {
         const blinking = gsap.timeline({ repeat: -1, repeatDelay: 1 });
@@ -53,10 +68,9 @@ export class Symbol extends Container {
         blinking.play();
     }
     async win() {
-        console.log("won", this);
-
         const filter = new ColorMatrixFilter();
         this.filters = [filter];
+
         const tl = gsap.timeline();
 
         tl.fromTo(
@@ -105,5 +119,8 @@ export class Symbol extends Container {
             },
         );
         shaking.to(this.children, { rotation: 0 });
+    }
+    onResize() {
+        this.postionSymbol();
     }
 }

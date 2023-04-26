@@ -7,12 +7,10 @@ export class ReelsContainer extends Container {
     app: Application;
     symbolsKeys: string[][] = [];
     reels: Reel[] = [];
-    symbolHeight: number;
     cheatMode = false;
     constructor(app: Application, cheatMode: boolean) {
         super();
         this.app = app;
-        this.symbolHeight = getSymbolHeight(app.screen);
         for (let i = 0; i < numberOfReels; i++) {
             const reel = new Reel(i, app, randomInitialSymbols());
             this.addChild(reel);
@@ -23,11 +21,13 @@ export class ReelsContainer extends Container {
     }
 
     public positionContainer() {
+        const symbolHeight = getSymbolHeight(this.app.screen);
+
         this.sortableChildren = true;
         this.pivot.set(this.width / 2, 0);
         this.position.set(
-            this.app.screen.width / 2 + this.symbolHeight / 2,
-            this.symbolHeight * 1.75,
+            this.app.screen.width / 2 + symbolHeight / 2,
+            symbolHeight * 1.75,
         );
     }
 
@@ -71,4 +71,10 @@ export class ReelsContainer extends Container {
             .map((column) => column[1])
             .every((symbol) => symbol === this.symbolsKeys[0][1]);
     };
+    public onResize() {
+        this.positionContainer();
+        this.reels.forEach((reel) => {
+            reel.onResize();
+        });
+    }
 }

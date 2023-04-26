@@ -12,15 +12,20 @@ import { ReelBackground } from "./ReelBackground";
 import { Background } from "./Background";
 import { sound } from "@pixi/sound";
 import { spin } from "./spin";
+import { Container } from "react-dom";
+import { getSymbolHeight } from "./consts";
 
 const PixiGame: React.FC = observer(() => {
     const canvasRef: any = useRef<HTMLCanvasElement>(null);
     let app: Application;
     let reelsContainer: ReelsContainer;
     let reels: Reel[];
+    let reelsBackground: ReelBackground;
+    let background: Background;
+    let mask: Mask;
+
     let winScreen: WinScreen;
     let playBtn: Button;
-    // let symbolHeight: number;
     const {
         budget: { won, payForBet, toWin },
         player: { cheatMode },
@@ -28,16 +33,15 @@ const PixiGame: React.FC = observer(() => {
 
     const onAssetsLoaded = (newApp: Application) => {
         app = newApp;
-        // symbolHeight = getSymbolHeight(screen);
         app.stage.sortableChildren = true;
 
-        const background = new Background(app);
+        background = new Background(app);
         app.stage.addChild(background);
 
         playBtn = new Button(play, app);
         app.stage.addChild(playBtn);
 
-        const reelsBackground = new ReelBackground(app);
+        reelsBackground = new ReelBackground(app);
         app.stage.addChild(reelsBackground);
 
         reelsContainer = new ReelsContainer(app, cheatMode);
@@ -45,7 +49,7 @@ const PixiGame: React.FC = observer(() => {
         reelsContainer.positionContainer();
         reels = reelsContainer.children as Reel[];
 
-        const mask = new Mask(app);
+        mask = new Mask(app);
         app.stage.addChild(mask);
         reelsContainer.mask = mask;
     };
@@ -65,15 +69,30 @@ const PixiGame: React.FC = observer(() => {
         });
         spin(app.screen, reels, reelsContainer, winScreen, won);
     }
+    const onResize = (app: Application, reelsContainer: ReelsContainer) => {
+        app.renderer.resize(window.innerWidth, window.innerHeight);
+        background.setPosition(app.screen);
+        reelsBackground.onResize(app);
+        reelsContainer.onResize();
+        mask.onResize();
 
+        playBtn.btnPosition();
+        playBtn.btnSize();
+    };
     useEffect(() => {
         app = new Application({
             backgroundColor: "#000000",
-            width: window.innerWidth,
-            height: window.innerHeight / 3,
+            resizeTo: window,
+            // width: window.innerWidth,
+            // height: window.innerHeight / 3,
         });
         canvasRef.current.appendChild(app.view);
-        app.renderer.resize(window.innerWidth, window.innerHeight);
+        // resizeApp(app);
+        window.addEventListener("resize", () => {
+            onResize(app, reelsContainer);
+        });
+
+        // app.renderer.resize(window.innerWidth, window.innerHeight);
         app.start();
 
         //enable Chrome extension

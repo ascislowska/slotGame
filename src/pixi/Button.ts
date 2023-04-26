@@ -20,10 +20,11 @@ export class Button extends Container {
     constructor(onClick: () => void, app: Application) {
         super();
         this.app = app;
+
         this.addSprite();
-        this.btnPosition();
         this.onClick = onClick;
         this.sortableChildren = true;
+
         this.filter = new ColorMatrixFilter();
         this.filters = [this.filter];
         this.lightUp();
@@ -36,18 +37,25 @@ export class Button extends Container {
         this.btn.eventMode = "static";
         this.btn.texture.baseTexture.mipmap = MIPMAP_MODES.ON;
 
-        this.btn.width = this.btn.height = getSymbolHeight(this.app.screen) * 2;
-        this.btn.anchor.set(0.5);
         this.btn.on("pointerdown", this.onClick);
         this.btn.on("mouseover", this.onMouseOver);
         this.btn.on("mouseout", this.onMouseOut);
 
+        this.btnPosition();
+        this.btnSize();
         this.blink(this.btn);
     }
 
-    private btnPosition() {
+    public btnPosition() {
         this.x = this.app.screen.width / 2;
         this.y = this.app.screen.height * 0.7;
+    }
+    public btnSize() {
+        if (this.btn) {
+            this.btn.width = this.btn.height =
+                getSymbolHeight(this.app.screen) * 2;
+            this.btn.anchor.set(0.5);
+        }
     }
     onMouseOver = () => {
         if (!this.disabled) {

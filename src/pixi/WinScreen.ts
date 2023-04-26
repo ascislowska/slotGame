@@ -58,7 +58,7 @@ export class WinScreen extends Container {
         }
     }
     showGlows = () => {
-        this.playWinSound();
+        // this.playWinSound();
         const tl = gsap.timeline();
         tl.fromTo(
             this.glows,
@@ -67,10 +67,11 @@ export class WinScreen extends Container {
             },
             {
                 pixi: { alpha: 1 },
-                stagger: 0.05 * Math.random(),
+                stagger: 0.02,
                 ease: "back",
-                duration: 1,
+                duration: 0.5,
                 delay: 0.5,
+                onStart: this.playWinSound,
             },
         );
         tl.to(this.glows, {
@@ -79,8 +80,8 @@ export class WinScreen extends Container {
             width: this.size,
             height: this.size,
             alpha: 0.5,
-            duration: 2,
             onStart: this.playWinSound,
+            duration: 1.5,
         });
         tl.fromTo(
             this.text,

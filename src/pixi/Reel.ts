@@ -11,7 +11,6 @@ export class Reel extends Container {
     symbols: Symbol[] = [];
     initialSymbols: string[] = [];
     newKeys: string[] = [];
-    symbolHeight: number;
     constructor(
         reelIndex: number,
         app: Application,
@@ -20,7 +19,6 @@ export class Reel extends Container {
         super();
         this.app = app;
         this.reelIndex = reelIndex;
-        this.symbolHeight = getSymbolHeight(this.app.screen);
 
         this.initialSymbols = initialSymbols
             ? initialSymbols
@@ -32,11 +30,11 @@ export class Reel extends Container {
             this.addChild(symbol);
             this.symbols.push(symbol);
         });
+        this.sortableChildren = true;
 
         this.containerPosition();
     }
     public containerPosition() {
-        this.sortableChildren = true;
         this.pivot.set(0, 0);
 
         this.x =
@@ -65,4 +63,8 @@ export class Reel extends Container {
     public lostAnimation = () => {
         this.symbols[1].lost();
     };
+    public onResize() {
+        this.containerPosition();
+        this.symbols.forEach((symbol) => symbol.onResize());
+    }
 }
