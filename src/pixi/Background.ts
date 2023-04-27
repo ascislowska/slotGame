@@ -9,8 +9,7 @@ export class Background extends Container {
         this.createBackground(app);
     }
     async createBackground(app: Application) {
-        const texture = await Assets.load("night");
-        this.background = Sprite.from(texture);
+        this.background = Sprite.from("night");
         this.background.anchor.set(0.5, 0);
         this.addChild(this.background);
         this.setPosition(app.screen);

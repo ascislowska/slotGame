@@ -2,18 +2,15 @@ import { Application, Container } from "pixi.js";
 import { Reel } from "./Reel";
 import { randomInitialSymbols, symbolsList } from "../request/symbolList";
 import { getSymbolHeight, numberOfReels } from "./consts";
-import { PlayBtn } from "./Button";
 
 export class ReelsContainer extends Container {
     app: Application;
-    playBtn: PlayBtn;
     symbolsKeys: string[][] = [];
     reels: Reel[] = [];
     cheatMode = false;
-    constructor(app: Application, playBtn: PlayBtn) {
+    constructor(app: Application) {
         super();
         this.app = app;
-        this.playBtn = playBtn;
         for (let i = 0; i < numberOfReels; i++) {
             const reel = new Reel(i, app, randomInitialSymbols());
             this.addChild(reel);
@@ -49,21 +46,21 @@ export class ReelsContainer extends Container {
         await this.reels.forEach((reel) => {
             reel.lostAnimation();
         });
-        this.playBtn.enable();
     };
     public afterSpinning() {
-        this.children.forEach((child) => {
-            this.removeChild(child);
-        });
-        this.reels = [];
-
-        for (let i = 0; i < numberOfReels; i++) {
+        //remove old reels
+        for (let i = numberOfReels; i >= 0; i--) {
             this.removeChild(this.children[i]);
+        }
+        this.reels = [];
+        //create new reels with last 3 symbols
+        for (let i = 0; i < numberOfReels; i++) {
             const reel = new Reel(i, this.app, this.symbolsKeys[i]);
             this.addChild(reel);
             this.reels.push(reel);
         }
     }
+
     public checkIfWins = () => {
         if (this.symbolsKeys.length >= 3 && this.middleLine()) {
             return true;

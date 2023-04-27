@@ -100,6 +100,8 @@ export class WinScreen extends Container {
         });
     };
     playWinSound = () => {
+        sound.stop("neon");
+
         sound.play("winSound");
     };
     cleanUp = () => {

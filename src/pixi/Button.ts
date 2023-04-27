@@ -49,6 +49,10 @@ export class PlayBtn extends Container {
     public btnPosition() {
         this.x = this.app.screen.width / 2;
         this.y = this.app.screen.height * 0.7;
+        if (this.app.screen.height < 800) {
+            this.x = this.width;
+            this.y = this.app.screen.height / 2;
+        }
     }
     public btnSize() {
         if (this.btn) {

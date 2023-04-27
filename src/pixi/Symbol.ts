@@ -9,7 +9,6 @@ import {
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
 import { getSymbolHeight } from "./consts";
-import { AgentOptions } from "http";
 
 gsap.registerPlugin(PixiPlugin);
 PixiPlugin.registerPIXI({
@@ -37,9 +36,6 @@ export class Symbol extends Container {
         this.symbol.texture.baseTexture.mipmap = MIPMAP_MODES.ON;
         this.addChild(this.symbol);
 
-        // this.symbol.width = this.symbol.height = this.symbolHeight;
-        // this.symbol.anchor.set(0.5, 0.5);
-        // this.symbol.y = index * this.symbolHeight;
         this.postionSymbol();
         this.blink();
     }

@@ -33,7 +33,7 @@ export function spin(
     }
 
     function stop() {
-        sound.stop("neon");
+        // sound.stop("neon");
         reelsContainer.afterSpinning();
 
         if (reelsContainer.checkIfWins()) {
@@ -42,6 +42,7 @@ export function spin(
             winScreen.showScreen();
         } else {
             reelsContainer.lostAnimation();
+            winScreen.cleanUp();
         }
     }
 }

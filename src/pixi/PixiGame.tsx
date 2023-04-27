@@ -45,7 +45,7 @@ const PixiGame: React.FC = observer(() => {
         reelsBackground = new ReelBackground(app);
         app.stage.addChild(reelsBackground);
 
-        reelsContainer = new ReelsContainer(app, playBtn);
+        reelsContainer = new ReelsContainer(app);
         app.stage.addChild(reelsContainer);
         reelsContainer.positionContainer();
         reels = reelsContainer.children as Reel[];
@@ -83,8 +83,7 @@ const PixiGame: React.FC = observer(() => {
         reelsContainer.onResize();
         mask.onResize();
         playBtn.onResize();
-        // playBtn.btnPosition();
-        // playBtn.btnSize();
+
         cheatBtn.onResize();
     };
     useEffect(() => {
@@ -93,16 +92,13 @@ const PixiGame: React.FC = observer(() => {
             resizeTo: window,
         });
         canvasRef.current.appendChild(app.view);
-        // resizeApp(app);
+        app.start();
+        //enable Chrome extension
+        (globalThis as any).__PIXI_APP__ = app;
+
         window.addEventListener("resize", () => {
             onResize(app);
         });
-
-        // app.renderer.resize(window.innerWidth, window.innerHeight);
-        app.start();
-
-        //enable Chrome extension
-        (globalThis as any).__PIXI_APP__ = app;
 
         loadAssets().then(() => {
             if (app) {

@@ -1,6 +1,6 @@
 import { scrollBy } from "../pixi/consts";
 import { symbolsKeys } from "../pixi/consts";
-export const symbolsList = (cheat?: boolean) => {
+export const  = (cheat?: boolean) => {
     const list: string[] = [];
     if (cheat) {
         for (let i = 0; i < scrollBy; i++) {

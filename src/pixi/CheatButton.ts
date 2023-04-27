@@ -47,8 +47,14 @@ export class CheatBtn extends Container {
     }
 
     public btnPosition() {
-        this.x = this.app.screen.width - this.width;
-        this.y = 0;
+        if (this.app.screen.height < 400) {
+            console.log(this.app.screen.height);
+            this.x = 0;
+            this.y = this.app.screen.height - this.height;
+        } else {
+            this.x = this.app.screen.width - this.width;
+            this.y = 0;
+        }
     }
     public btnSize() {
         if (this.btn) {

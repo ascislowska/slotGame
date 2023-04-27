@@ -4,6 +4,7 @@ export const loadSounds = async () => {
     sound.add("music", {
         url: process.env.PUBLIC_URL + "/assets/sounds/SummerTown.mp3",
         volume: 0.2,
+        loop: true,
     });
     sound.play("music");
     sound.add("neon", {

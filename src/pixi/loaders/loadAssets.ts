@@ -5,7 +5,7 @@ import burger from "../../assets/symbols/burger.png";
 import cafe from "../../assets/symbols/cafe.png";
 import drink from "../../assets/symbols/drink.png";
 import music from "../../assets/symbols/music.png";
-import star from "../../assets/symbols/burger.png";
+import star from "../../assets/symbols/star.png";
 
 import blueGlow from "../../assets/glows/blue-glow.png";
 import lightGlow from "../../assets/glows/light-glow.png";
