@@ -2,21 +2,23 @@ import { Application, Container } from "pixi.js";
 import { Reel } from "./Reel";
 import { randomInitialSymbols, symbolsList } from "../request/symbolList";
 import { getSymbolHeight, numberOfReels } from "./consts";
+import { PlayBtn } from "./Button";
 
 export class ReelsContainer extends Container {
     app: Application;
+    playBtn: PlayBtn;
     symbolsKeys: string[][] = [];
     reels: Reel[] = [];
     cheatMode = false;
-    constructor(app: Application, cheatMode: boolean) {
+    constructor(app: Application, playBtn: PlayBtn) {
         super();
         this.app = app;
+        this.playBtn = playBtn;
         for (let i = 0; i < numberOfReels; i++) {
             const reel = new Reel(i, app, randomInitialSymbols());
             this.addChild(reel);
             this.reels.push(reel);
         }
-        this.cheatMode = cheatMode;
         this.positionContainer();
     }
 
@@ -39,14 +41,15 @@ export class ReelsContainer extends Container {
     }
 
     public winAnimation = async () => {
-        this.reels.forEach(async (reel) => {
+        await this.reels.forEach(async (reel) => {
             reel.winAnimation();
         });
     };
-    public lostAnimation = () => {
-        this.reels.forEach(async (reel) => {
+    public lostAnimation = async () => {
+        await this.reels.forEach((reel) => {
             reel.lostAnimation();
         });
+        this.playBtn.enable();
     };
     public afterSpinning() {
         this.children.forEach((child) => {

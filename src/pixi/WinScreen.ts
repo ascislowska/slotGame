@@ -4,7 +4,7 @@ import { getSymbolHeight } from "./consts";
 import { getBiggerSize } from "./utils";
 import { WinText } from "./WinText";
 import { sound } from "@pixi/sound";
-import { Button } from "./Button";
+import { PlayBtn } from "./Button";
 
 export class WinScreen extends Container {
     app: Application;
@@ -12,8 +12,8 @@ export class WinScreen extends Container {
     symbolHeight;
     size: number;
     text: Container;
-    playBtn: Button;
-    constructor(app: Application, winValue: number, playBtn: Button) {
+    playBtn: PlayBtn;
+    constructor(app: Application, winValue: number, playBtn: PlayBtn) {
         super();
         this.app = app;
         this.visible = false;
@@ -58,7 +58,6 @@ export class WinScreen extends Container {
         }
     }
     showGlows = () => {
-        // this.playWinSound();
         const tl = gsap.timeline();
         tl.fromTo(
             this.glows,

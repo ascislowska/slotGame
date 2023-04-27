@@ -9,7 +9,7 @@ import {
 import { getSymbolHeight } from "./consts";
 import { gsap } from "gsap";
 
-export class Button extends Container {
+export class PlayBtn extends Container {
     onClick: () => void;
     app: Application;
     btn: Sprite | null = null;
@@ -113,5 +113,9 @@ export class Button extends Container {
         });
         this.playAnimation.add(blinking);
         // blinking.play();
+    }
+    onResize() {
+        this.btnPosition();
+        this.btnSize();
     }
 }

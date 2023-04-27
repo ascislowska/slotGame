@@ -4,7 +4,7 @@ import { useMainStore } from "../hooks/useMainStore";
 import { Reel } from "./Reel";
 import { loadAssets } from "./loaders/loadAssets";
 import { observer } from "mobx-react-lite";
-import { Button } from "./Button";
+import { PlayBtn } from "./Button";
 import { ReelsContainer } from "./ReelsContainer";
 import { Mask } from "./Mask";
 import { WinScreen } from "./WinScreen";
@@ -14,6 +14,7 @@ import { sound } from "@pixi/sound";
 import { spin } from "./spin";
 import { Container } from "react-dom";
 import { getSymbolHeight } from "./consts";
+import { CheatBtn } from "./CheatButton";
 
 const PixiGame: React.FC = observer(() => {
     const canvasRef: any = useRef<HTMLCanvasElement>(null);
@@ -23,12 +24,12 @@ const PixiGame: React.FC = observer(() => {
     let reelsBackground: ReelBackground;
     let background: Background;
     let mask: Mask;
+    let cheatBtn: CheatBtn;
 
     let winScreen: WinScreen;
-    let playBtn: Button;
+    let playBtn: PlayBtn;
     const {
         budget: { won, payForBet, toWin },
-        player: { cheatMode },
     } = useMainStore();
 
     const onAssetsLoaded = (newApp: Application) => {
@@ -38,13 +39,13 @@ const PixiGame: React.FC = observer(() => {
         background = new Background(app);
         app.stage.addChild(background);
 
-        playBtn = new Button(play, app);
+        playBtn = new PlayBtn(play, app);
         app.stage.addChild(playBtn);
 
         reelsBackground = new ReelBackground(app);
         app.stage.addChild(reelsBackground);
 
-        reelsContainer = new ReelsContainer(app, cheatMode);
+        reelsContainer = new ReelsContainer(app, playBtn);
         app.stage.addChild(reelsContainer);
         reelsContainer.positionContainer();
         reels = reelsContainer.children as Reel[];
@@ -52,8 +53,14 @@ const PixiGame: React.FC = observer(() => {
         mask = new Mask(app);
         app.stage.addChild(mask);
         reelsContainer.mask = mask;
-    };
 
+        cheatBtn = new CheatBtn(toggleCheatMode, app);
+        app.stage.addChild(cheatBtn);
+    };
+    function toggleCheatMode() {
+        reelsContainer.cheatMode = !reelsContainer.cheatMode;
+        cheatBtn.toggleBtn();
+    }
     function play() {
         sound.play("neon");
         playBtn.disable();
@@ -69,27 +76,26 @@ const PixiGame: React.FC = observer(() => {
         });
         spin(app.screen, reels, reelsContainer, winScreen, won);
     }
-    const onResize = (app: Application, reelsContainer: ReelsContainer) => {
+    const onResize = (app: Application) => {
         app.renderer.resize(window.innerWidth, window.innerHeight);
         background.setPosition(app.screen);
         reelsBackground.onResize(app);
         reelsContainer.onResize();
         mask.onResize();
-
-        playBtn.btnPosition();
-        playBtn.btnSize();
+        playBtn.onResize();
+        // playBtn.btnPosition();
+        // playBtn.btnSize();
+        cheatBtn.onResize();
     };
     useEffect(() => {
         app = new Application({
             backgroundColor: "#000000",
             resizeTo: window,
-            // width: window.innerWidth,
-            // height: window.innerHeight / 3,
         });
         canvasRef.current.appendChild(app.view);
         // resizeApp(app);
         window.addEventListener("resize", () => {
-            onResize(app, reelsContainer);
+            onResize(app);
         });
 
         // app.renderer.resize(window.innerWidth, window.innerHeight);
