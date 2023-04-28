@@ -99,6 +99,9 @@ const PixiGame: React.FC = observer(() => {
         window.addEventListener("resize", () => {
             onResize(app);
         });
+        window.screen.orientation.addEventListener("change", () => {
+            onResize(app);
+        });
 
         loadAssets().then(() => {
             if (app) {

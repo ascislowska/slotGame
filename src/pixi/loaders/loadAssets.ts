@@ -16,6 +16,8 @@ import borderNeon from "../../assets/border-neon.png";
 import spin from "../../assets/play.png";
 import check from "../../assets/check.png";
 import night from "../../assets/night.jpg";
+import checkbox from "../../assets/checkbox.png";
+import checked from "../../assets/checkbox-checked.png";
 import { loadSounds } from "./loadSounds";
 
 export const loadAssets = async () => {
@@ -43,6 +45,10 @@ export const loadAssets = async () => {
     await Assets.load("spin");
     Assets.add("check", check);
     Assets.load("check");
+    Assets.add("checkbox", checkbox);
+    Assets.load("checkbox");
+    Assets.add("checked", checked);
+    Assets.load("checked");
     Assets.add("night", night);
     await Assets.load("night");
 

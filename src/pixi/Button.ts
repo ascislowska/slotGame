@@ -8,6 +8,7 @@ import {
 } from "pixi.js";
 import { getSymbolHeight } from "./consts";
 import { gsap } from "gsap";
+import { mobileLandscape } from "./utils";
 
 export class PlayBtn extends Container {
     onClick: () => void;
@@ -49,7 +50,7 @@ export class PlayBtn extends Container {
     public btnPosition() {
         this.x = this.app.screen.width / 2;
         this.y = this.app.screen.height * 0.7;
-        if (this.app.screen.height < 800) {
+        if (mobileLandscape(this.app.screen)) {
             this.x = this.width;
             this.y = this.app.screen.height / 2;
         }

@@ -10,4 +10,6 @@ export const centerContainer = (
 export const getBiggerSize = (screen: Rectangle) => {
     return screen.width >= screen.height ? screen.width : screen.height;
 };
-export const reelsTop = () => {};
+export const mobileLandscape = (screen: Rectangle) => {
+    return screen.height < 800 && screen.width / screen.height >= 2;
+};

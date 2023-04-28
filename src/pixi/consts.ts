@@ -1,10 +1,11 @@
 import { Rectangle } from "pixi.js";
+import { mobileLandscape } from "./utils";
 
 export const symbolWidth = 100;
 export const symbolHeight = 100;
 export const symbolPadding = 10;
 export const getSymbolHeight = (screen: Rectangle) => {
-    if (screen.height < 800) {
+    if (mobileLandscape(screen)) {
         return screen.height / 6;
     }
     return screen.height / 9;
