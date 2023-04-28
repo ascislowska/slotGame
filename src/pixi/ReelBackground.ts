@@ -1,4 +1,4 @@
-import { Application, Container, Graphics, Sprite } from "pixi.js";
+import { Application, Assets, Container, Graphics, Sprite } from "pixi.js";
 import {
     getSymbolHeight,
     numberOfReels,

@@ -17,6 +17,7 @@ export class PlayBtn extends Container {
     disabled: boolean = false;
     playAnimation = gsap.timeline();
     filter = new ColorMatrixFilter();
+    normalBrightness = 2;
 
     constructor(onClick: () => void, app: Application) {
         super();
@@ -29,6 +30,7 @@ export class PlayBtn extends Container {
         this.filter = new ColorMatrixFilter();
         this.filters = [this.filter];
         this.lightUp();
+        this.addGlows();
     }
 
     private async addSprite() {
@@ -45,6 +47,14 @@ export class PlayBtn extends Container {
         this.btnPosition();
         this.btnSize();
         this.blink(this.btn);
+    }
+    private addGlows() {
+        const glow = Sprite.from("lightGlow");
+        this.addChild(glow);
+        glow.alpha = 0.1;
+        glow.anchor.set(0.5, 0.5);
+        // glow.position.set(this.width / 2, this.height / 2);
+        glow.zIndex = -1;
     }
 
     public btnPosition() {
@@ -65,13 +75,13 @@ export class PlayBtn extends Container {
     onMouseOver = () => {
         if (!this.disabled) {
             this.playAnimation.pause();
-            gsap.to(this.filter, { brightness: 6 });
+            gsap.to(this.filter, { brightness: this.normalBrightness * 2 });
         }
     };
     onMouseOut = () => {
         if (!this.disabled) {
             this.playAnimation.play();
-            gsap.to(this.filter, { brightness: 1 });
+            gsap.to(this.filter, { brightness: this.normalBrightness });
         }
     };
     disable = () => {
@@ -84,7 +94,7 @@ export class PlayBtn extends Container {
         this.disabled = false;
 
         if (this.btn) {
-            gsap.to(this.filter, { brightness: 1 });
+            gsap.to(this.filter, { brightness: this.normalBrightness });
             this.btn.eventMode = "static";
         }
     };
